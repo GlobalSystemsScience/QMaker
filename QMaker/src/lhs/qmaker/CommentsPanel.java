@@ -52,6 +52,8 @@ public abstract class CommentsPanel extends JPanel {
 
     }
     public abstract void toAnswers();
-    public abstract void completeQuestion();
+    public void completeQuestion() {
+    	Controller.completeQuestion();
+    }
     public abstract ArrayList<String> getComments();
 }

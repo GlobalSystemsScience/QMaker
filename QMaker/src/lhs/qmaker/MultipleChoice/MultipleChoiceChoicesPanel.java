@@ -9,7 +9,6 @@ public class MultipleChoiceChoicesPanel extends ChoicesPanel {
     public void toAnswers() {
         Controller.answers = new MultipleChoiceAnswersPanel();
         Controller.setPane(Controller.answers);
-        
     }
 
     @Override

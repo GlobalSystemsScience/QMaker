@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import lhs.qmaker.MultipleChoice.MultipleChoiceQuestionPanel;
+import lhs.qmaker.matching.MatchingQuestionPanel;
 
 
 public class Controller {
@@ -33,6 +34,33 @@ public class Controller {
     public static void newMultipleChoice() {
         question = new MultipleChoiceQuestionPanel();
         app.setPane(question);
+    }
+    public static void newMatching() {
+    	question = new MatchingQuestionPanel();
+    	app.setPane(question);
+    }
+    public static void completeQuestion() {
+    	String type = "";
+    	if (question instanceof MultipleChoiceQuestionPanel) {
+    		type = "mc";
+    	} else if (question instanceof MatchingQuestionPanel) {
+    		type = "ma";
+    	}/* else if (question instanceof SelectQuestionPanel) {
+    		type = "se";
+    	} else if (question instanceof WriteInQuestionPanel) {
+    		type = "wi";
+    	}*/
+    	boolean success = Controller.createQuestion(Controller.question.getQuestion(),
+                Controller.choices.getChoices(), Controller.answers.getAnswers(), Controller.comments.getComments(),type);
+        if (success) {
+            Controller.setPane(null);//TODO create a start screen pane
+            Controller.answers = null;
+            Controller.choices = null;
+            Controller.comments = null;
+            Controller.question = null;
+        } else {
+          //TODO handle cases where success is false
+        }
     }
     public static boolean createQuestion(String question, ArrayList<String> choices, ArrayList<String> answers,
             ArrayList<String> comments, String type) {

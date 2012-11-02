@@ -55,20 +55,6 @@ public class MultipleChoiceCommentsPanel extends CommentsPanel {
         Controller.setPane(Controller.answers);
     }
     @Override
-    public void completeQuestion() {
-        boolean success = Controller.createQuestion(Controller.question.getQuestion(),
-                Controller.choices.getChoices(), Controller.answers.getAnswers(), Controller.comments.getComments(),"mc");
-        if (success) {
-            Controller.setPane(null);//TODO create a start screen pane
-            Controller.answers = null;
-            Controller.choices = null;
-            Controller.comments = null;
-            Controller.question = null;
-        } else {
-          //TODO handle cases where success is false
-        }
-    }
-    @Override
     public ArrayList<String> getComments() {
         ArrayList<JTextArea> comments;
         if (toggleButton.isSelected())
@@ -100,7 +86,7 @@ public class MultipleChoiceCommentsPanel extends CommentsPanel {
         }
         for(; i < num; i++) {
             JTextArea textArea = new JTextArea();
-            if (num == 2) {
+            if (i == 0) {
                 textArea.setText("Type comment for correct answer here.");
             } else {
                 textArea.setText("Type comment for answer, \"" + Controller.choices.getChoices().get(i) + "\", here.");

@@ -83,13 +83,19 @@ public class QMaker {
         mnNew.add(mntmMultipleChoice);
         
         JMenuItem mntmMatching = new JMenuItem("Matching");
+        mntmMatching.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		Controller.newMatching();
+        	}
+        });
         mnNew.add(mntmMatching);
         
         JMenuItem mntmSelectAllThat = new JMenuItem("Select All That Apply");
         mnNew.add(mntmSelectAllThat);
         
-        JMenuItem mntmWriteIn = new JMenuItem("Write In");
-        mnNew.add(mntmWriteIn);
+        //This is not needed for interactive questions
+        /*JMenuItem mntmWriteIn = new JMenuItem("Write In");
+        mnNew.add(mntmWriteIn);*/
         
         JMenu mnEdit = new JMenu("Edit");
         mnQuestions.add(mnEdit);
