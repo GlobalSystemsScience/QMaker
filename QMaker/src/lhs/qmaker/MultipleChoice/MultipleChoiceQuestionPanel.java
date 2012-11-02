@@ -1,14 +1,14 @@
 package lhs.qmaker.MultipleChoice;
 
-import lhs.qmaker.MenuController;
+import lhs.qmaker.Controller;
 import lhs.qmaker.QuestionPanel;
 
 public class MultipleChoiceQuestionPanel extends QuestionPanel {
 
     @Override
     public void toChoices() {
-        MenuController.choices = new MultipleChoiceChoicesPanel();
-        MenuController.setPane(MenuController.choices);
+        Controller.choices = new MultipleChoiceChoicesPanel();
+        Controller.setPane(Controller.choices);
     }
 
 }

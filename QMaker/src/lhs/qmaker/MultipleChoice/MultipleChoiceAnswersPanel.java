@@ -9,7 +9,7 @@ import javax.swing.JButton;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import lhs.qmaker.AnswersPanel;
-import lhs.qmaker.MenuController;
+import lhs.qmaker.Controller;
 import lhs.qmaker.WrapButton;
 
 public class MultipleChoiceAnswersPanel extends AnswersPanel {
@@ -22,7 +22,7 @@ public class MultipleChoiceAnswersPanel extends AnswersPanel {
      */
     public MultipleChoiceAnswersPanel() {
         int size = 0;
-        ArrayList<String> choices = MenuController.choices.getChoices();
+        ArrayList<String> choices = Controller.choices.getChoices();
         for (int i = 0; i < choices.size(); i++) {
             JButton b = new WrapButton(choices.get(i));
             buttons.add(b);
@@ -45,20 +45,24 @@ public class MultipleChoiceAnswersPanel extends AnswersPanel {
 
     @Override
     public ArrayList<String> getAnswers() {
+        if (answer == -1)
+            return null;
         ArrayList<String> al = new ArrayList<String>();
-        al.add(MenuController.choices.getChoices().get(answer));
+        al.add(Controller.choices.getChoices().get(answer));
         return al;
     }
 
     @Override
     public void toChoices() {
-        MenuController.setPane(MenuController.choices);
+        Controller.setPane(Controller.choices);
     }
 
     @Override
     public void toComments() {
-        MenuController.comments = new MultipleChoiceCommentsPanel();
-        MenuController.setPane(MenuController.comments);
+        if (answer == -1)
+            return;
+        Controller.comments = new MultipleChoiceCommentsPanel();
+        Controller.setPane(Controller.comments);
     }
 
 }

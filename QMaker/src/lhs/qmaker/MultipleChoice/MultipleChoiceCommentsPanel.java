@@ -5,7 +5,7 @@ import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
 
 import lhs.qmaker.CommentsPanel;
-import lhs.qmaker.MenuController;
+import lhs.qmaker.Controller;
 import lhs.qmaker.QMaker;
 
 import java.awt.event.ActionListener;
@@ -52,18 +52,18 @@ public class MultipleChoiceCommentsPanel extends CommentsPanel {
     }
     @Override
     public void toAnswers() {
-        MenuController.setPane(MenuController.answers);
+        Controller.setPane(Controller.answers);
     }
     @Override
     public void completeQuestion() {
-        boolean success = MenuController.createQuestion(MenuController.question.getQuestion(),
-                MenuController.choices.getChoices(), MenuController.answers.getAnswers(), MenuController.comments.getComments(),"mc");
+        boolean success = Controller.createQuestion(Controller.question.getQuestion(),
+                Controller.choices.getChoices(), Controller.answers.getAnswers(), Controller.comments.getComments(),"mc");
         if (success) {
-            MenuController.setPane(null);//TODO create a start screen pane
-            MenuController.answers = null;
-            MenuController.choices = null;
-            MenuController.comments = null;
-            MenuController.question = null;
+            Controller.setPane(null);//TODO create a start screen pane
+            Controller.answers = null;
+            Controller.choices = null;
+            Controller.comments = null;
+            Controller.question = null;
         } else {
           //TODO handle cases where success is false
         }
@@ -85,7 +85,7 @@ public class MultipleChoiceCommentsPanel extends CommentsPanel {
         ArrayList<JTextArea> comments;
         int num = 0;
         if (toggleButton.isSelected()) {
-            num = MenuController.choices.getChoices().size();
+            num = Controller.choices.getChoices().size();
             comments = perChoice;
         } else {
             num = 2;
@@ -103,7 +103,7 @@ public class MultipleChoiceCommentsPanel extends CommentsPanel {
             if (num == 2) {
                 textArea.setText("Type comment for correct answer here.");
             } else {
-                textArea.setText("Type comment for answer, \"" + MenuController.choices.getChoices().get(i) + "\", here.");
+                textArea.setText("Type comment for answer, \"" + Controller.choices.getChoices().get(i) + "\", here.");
             }
             textArea.setWrapStyleWord(true);
             textArea.setLineWrap(true);

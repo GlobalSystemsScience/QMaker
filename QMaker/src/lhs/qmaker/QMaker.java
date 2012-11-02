@@ -52,7 +52,7 @@ public class QMaker {
      * Initialize the contents of the frame.
      */
     private void initialize() {
-        MenuController.setQMaker(this);
+        Controller.setQMaker(this);
         frame = new JFrame();
         frame.setBounds(100, 100, 480, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,7 +77,7 @@ public class QMaker {
         JMenuItem mntmMultipleChoice = new JMenuItem("Multiple Choice");
         mntmMultipleChoice.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                MenuController.newMultipleChoice();
+                Controller.newMultipleChoice();
             }
         });
         mnNew.add(mntmMultipleChoice);

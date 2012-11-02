@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import lhs.qmaker.MultipleChoice.MultipleChoiceQuestionPanel;
 
 
-public class MenuController {
+public class Controller {
+    public static final String QUOTATION_MARK_REPLACE = "%qm%";
+    
     private static final String USERNAME = "qmaker";
     private static final String PASSWORD = "E1nste1n";
     private static final String HOSTNAME = "instance28773.db.xeround.com:18798";
@@ -23,7 +25,7 @@ public class MenuController {
     public static CommentsPanel comments;
 
     public static void setQMaker(QMaker app) {
-        MenuController.app = app;
+        Controller.app = app;
     }
     public static void setPane(Container pane) {
         app.setPane(pane);
@@ -44,8 +46,8 @@ public class MenuController {
           if (comments.size() == 2) {
               String commentids = "";
               for (int i = 0; i < comments.size(); i++) {
-                  s.executeUpdate("INSERT INTO comments (comment) VALUES (\""+comments.get(i)+"\")");
-                  s.execute("SELECT c.id FROM comments c WHERE c.comment=\""+comments.get(i)+"\"");
+                  s.executeUpdate("INSERT INTO comments (comment) VALUES (\""+comments.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE) +"\")");
+                  s.execute("SELECT c.id FROM comments c WHERE c.comment=\""+comments.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\"");
                   ResultSet r = s.getResultSet();
                   r.first();
                   commentids = commentids+r.getString(1)+",";
@@ -53,8 +55,8 @@ public class MenuController {
               String choiceids = "";
               String answerids = "";
               for (int i = 0; i < choices.size(); i++) {
-                  s.executeUpdate("INSERT INTO choices (choice) VALUES (\""+choices.get(i)+"\")");
-                  s.execute("SELECT ch.id FROM choices ch WHERE ch.choice=\""+choices.get(i)+"\"");
+                  s.executeUpdate("INSERT INTO choices (choice) VALUES (\""+choices.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\")");
+                  s.execute("SELECT ch.id FROM choices ch WHERE ch.choice=\""+choices.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\"");
                   ResultSet r = s.getResultSet();
                   r.first();
                   if (answers.contains(choices.get(i))) {
@@ -63,15 +65,15 @@ public class MenuController {
                   choiceids = choiceids+r.getString(1)+",";
               }
               s.executeUpdate("INSERT INTO questions (question, choice_ids, answer_ids, type, wrong_comment, correct_comment) VALUES (\""+
-                      question+"\", \""+choiceids +"\", \""+answerids+"\", \""+type+"\", \""+comments.get(1)+"\", \""+comments.get(0)+"\")");
+                      question.replaceAll("\"", QUOTATION_MARK_REPLACE)+"\", \""+choiceids +"\", \""+answerids+"\", \""+type+"\", \""+comments.get(1).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\", \""+comments.get(0).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\")");
           } else {
               //TODO
               //TODO
               //TODO
               String commentids[] = new String[comments.size()];
               for (int i = 0; i < comments.size(); i++) {
-                  s.executeUpdate("INSERT INTO comments (comment) VALUES (\""+comments.get(i)+"\")");
-                  s.execute("SELECT c.id FROM comments c WHERE c.comment=\""+comments.get(i)+"\"");
+                  s.executeUpdate("INSERT INTO comments (comment) VALUES (\""+comments.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\")");
+                  s.execute("SELECT c.id FROM comments c WHERE c.comment=\""+comments.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\"");
                   ResultSet r = s.getResultSet();
                   r.first();
                   commentids[i] = r.getString(1);
@@ -79,8 +81,8 @@ public class MenuController {
               String answerids = new String();
               String choiceids = new String();
               for (int i = 0; i < choices.size(); i++) {
-                  s.executeUpdate("INSERT INTO choices (choice, comment_id) VALUES (\""+choices.get(i)+"\", "+commentids[i]+")");
-                  s.execute("SELECT ch.id FROM choices ch WHERE ch.choice=\""+choices.get(i)+"\" AND ch.comment_id=\""+commentids[i]+"\"");
+                  s.executeUpdate("INSERT INTO choices (choice, comment_id) VALUES (\""+choices.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\", "+commentids[i]+")");
+                  s.execute("SELECT ch.id FROM choices ch WHERE ch.choice=\""+choices.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\" AND ch.comment_id=\""+commentids[i]+"\"");
                   ResultSet r = s.getResultSet();
                   r.first();
                   if (answers.contains(choices.get(i))) {
@@ -88,8 +90,8 @@ public class MenuController {
                   }
                   choiceids = choiceids+r.getString(1)+",";
               }
-              s.executeUpdate("INSERT INTO questions (question, choice_ids, answer_ids, type,) VALUES (\""+
-                      question+"\", \""+choiceids +"\", \""+answerids+"\", \""+type+"\")");
+              s.executeUpdate("INSERT INTO questions (question, choice_ids, answer_ids, type) VALUES (\""+
+                      question.replaceAll("\"", QUOTATION_MARK_REPLACE)+"\", \""+choiceids +"\", \""+answerids+"\", \""+type+"\")");
           }
         } catch (Exception ex) {
             ex.printStackTrace();
