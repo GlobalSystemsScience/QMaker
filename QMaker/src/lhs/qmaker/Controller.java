@@ -8,8 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import lhs.qmaker.MultipleChoice.MultipleChoiceQuestionPanel;
 import lhs.qmaker.matching.MatchingQuestionPanel;
+import lhs.qmaker.multiplechoice.MultipleChoiceQuestionPanel;
+import lhs.qmaker.select.SelectQuestionPanel;
 
 
 public class Controller {
@@ -31,6 +32,10 @@ public class Controller {
     public static void setPane(Container pane) {
         app.setPane(pane);
     }
+    public static void goToHomeScreen() {
+    	//TODO make an actual home screen
+    	setPane(null);
+    }
     public static void newMultipleChoice() {
         question = new MultipleChoiceQuestionPanel();
         app.setPane(question);
@@ -39,25 +44,29 @@ public class Controller {
     	question = new MatchingQuestionPanel();
     	app.setPane(question);
     }
+    public static void newSelect() {
+    	question = new SelectQuestionPanel();
+    	app.setPane(question);
+    }
     public static void completeQuestion() {
     	String type = "";
     	if (question instanceof MultipleChoiceQuestionPanel) {
     		type = "mc";
     	} else if (question instanceof MatchingQuestionPanel) {
     		type = "ma";
-    	}/* else if (question instanceof SelectQuestionPanel) {
+    	} else if (question instanceof SelectQuestionPanel) {
     		type = "se";
-    	} else if (question instanceof WriteInQuestionPanel) {
+    	}/* else if (question instanceof WriteInQuestionPanel) {
     		type = "wi";
     	}*/
-    	boolean success = Controller.createQuestion(Controller.question.getQuestion(),
-                Controller.choices.getChoices(), Controller.answers.getAnswers(), Controller.comments.getComments(),type);
+    	boolean success = createQuestion(question.getQuestion(),
+                choices.getChoices(), answers.getAnswers(), comments.getComments(),type);
         if (success) {
-            Controller.setPane(null);//TODO create a start screen pane
-            Controller.answers = null;
-            Controller.choices = null;
-            Controller.comments = null;
-            Controller.question = null;
+            goToHomeScreen();
+            answers = null;
+            choices = null;
+            comments = null;
+            question = null;
         } else {
           //TODO handle cases where success is false
         }
@@ -95,9 +104,6 @@ public class Controller {
               s.executeUpdate("INSERT INTO questions (question, choice_ids, answer_ids, type, wrong_comment, correct_comment) VALUES (\""+
                       question.replaceAll("\"", QUOTATION_MARK_REPLACE)+"\", \""+choiceids +"\", \""+answerids+"\", \""+type+"\", \""+comments.get(1).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\", \""+comments.get(0).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\")");
           } else {
-              //TODO
-              //TODO
-              //TODO
               String commentids[] = new String[comments.size()];
               for (int i = 0; i < comments.size(); i++) {
                   s.executeUpdate("INSERT INTO comments (comment) VALUES (\""+comments.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\")");
@@ -126,8 +132,6 @@ public class Controller {
             try {con.close();} catch (SQLException e) {e.printStackTrace();}
             return false;
         }
-        //TODO connect to and use sql database
-        //TODO handle failures
         try {con.close();} catch (SQLException e) {e.printStackTrace();}
         return true;
     }

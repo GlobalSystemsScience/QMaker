@@ -91,6 +91,11 @@ public class QMaker {
         mnNew.add(mntmMatching);
         
         JMenuItem mntmSelectAllThat = new JMenuItem("Select All That Apply");
+        mntmSelectAllThat.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		Controller.newSelect();
+        	}
+        });
         mnNew.add(mntmSelectAllThat);
         
         //This is not needed for interactive questions

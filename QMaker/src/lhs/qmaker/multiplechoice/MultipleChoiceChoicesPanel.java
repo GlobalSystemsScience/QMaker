@@ -1,4 +1,4 @@
-package lhs.qmaker.MultipleChoice;
+package lhs.qmaker.multiplechoice;
 
 import lhs.qmaker.ChoicesPanel;
 import lhs.qmaker.Controller;

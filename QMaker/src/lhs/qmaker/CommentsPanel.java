@@ -42,6 +42,15 @@ public abstract class CommentsPanel extends JPanel {
         panel.add(completeQuestion);
         
         JButton button_2 = new JButton("Cancel");
+        button_2.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		Controller.goToHomeScreen();
+        		Controller.question = null;
+        		Controller.choices = null;
+        		Controller.answers = null;
+        		Controller.comments = null;
+        	}
+        });
         button_2.setBounds(160, 14, 130, 23);
         panel.add(button_2);
         

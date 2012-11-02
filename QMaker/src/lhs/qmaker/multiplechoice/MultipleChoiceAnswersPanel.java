@@ -1,4 +1,4 @@
-package lhs.qmaker.MultipleChoice;
+package lhs.qmaker.multiplechoice;
 
 import java.awt.Color;
 import java.awt.Dimension;

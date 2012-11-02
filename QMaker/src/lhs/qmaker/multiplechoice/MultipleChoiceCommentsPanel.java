@@ -1,4 +1,4 @@
-package lhs.qmaker.MultipleChoice;
+package lhs.qmaker.multiplechoice;
 
 
 import javax.swing.JTextArea;
@@ -86,11 +86,13 @@ public class MultipleChoiceCommentsPanel extends CommentsPanel {
         }
         for(; i < num; i++) {
             JTextArea textArea = new JTextArea();
-            if (i == 0) {
-                textArea.setText("Type comment for correct answer here.");
-            } else {
+            if (num == 2)
+            	if (i == 0)
+            		textArea.setText("Type comment for correct answer here.");
+            	else
+            		textArea.setText("Type comment for wrong answer here.");
+            else
                 textArea.setText("Type comment for answer, \"" + Controller.choices.getChoices().get(i) + "\", here.");
-            }
             textArea.setWrapStyleWord(true);
             textArea.setLineWrap(true);
             textArea.setBorder(new LineBorder(new Color(0, 0, 0)));
