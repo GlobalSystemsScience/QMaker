@@ -81,6 +81,8 @@ public class Controller {
                   ("jdbc:mysql://" +HOSTNAME+"/"+DATABASE+"?user="+USERNAME+"&password="+PASSWORD); 
           Statement s=con.createStatement();
           if (comments.size() == 2) {
+              
+              // Handles putting the comments into the database.
               String commentids = "";
               for (int i = 0; i < comments.size(); i++) {
                   s.executeUpdate("INSERT INTO comments (comment) VALUES (\""+comments.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE) +"\")");
@@ -89,6 +91,11 @@ public class Controller {
                   r.first();
                   commentids = commentids+r.getString(1)+",";
               }
+              
+              /* Handles putting the choices into the database.
+               * If it is a matching type question, the answers will also
+               * be put into the database as choices.
+               */
               String choiceids = "";
               String answerids = "";
               for (int i = 0; i < choices.size(); i++) {
@@ -96,11 +103,23 @@ public class Controller {
                   s.execute("SELECT ch.id FROM choices ch WHERE ch.choice=\""+choices.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\"");
                   ResultSet r = s.getResultSet();
                   r.first();
-                  if (answers.contains(choices.get(i))) {
+                  choiceids = choiceids+r.getString(1)+",";
+                  if (!type.equals("ma") && answers.contains(choices.get(i))) {
+                      answerids = answerids+r.getString(1)+",";
+                  } else if (type.equals("ma")) { // The case where the question is matching type
+                      // Put all of the answers in as choices here.
+                      s.executeUpdate("INSERT INTO choices (choice) VALUES (\""+answers.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\")");
+                      s.execute("SELECT ch.id FROM choices ch WHERE ch.choice=\""+answers.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\"");
+                      r = s.getResultSet();
+                      r.first();
                       answerids = answerids+r.getString(1)+",";
                   }
-                  choiceids = choiceids+r.getString(1)+",";
+                  
               }
+              
+              /* Put the question tuple into the database that ties the
+               * other components together.
+               */
               s.executeUpdate("INSERT INTO questions (question, choice_ids, answer_ids, type, wrong_comment, correct_comment) VALUES (\""+
                       question.replaceAll("\"", QUOTATION_MARK_REPLACE)+"\", \""+choiceids +"\", \""+answerids+"\", \""+type+"\", \""+comments.get(1).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\", \""+comments.get(0).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\")");
           } else {

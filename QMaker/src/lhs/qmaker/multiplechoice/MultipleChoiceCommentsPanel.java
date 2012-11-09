@@ -32,7 +32,6 @@ public class MultipleChoiceCommentsPanel extends CommentsPanel {
      */
     public MultipleChoiceCommentsPanel() {
         super();
-        
         toggleButton = new JToggleButton("Comments for Every Choice");
         toggleButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         toggleButton.addActionListener(new ActionListener() {
@@ -48,6 +47,8 @@ public class MultipleChoiceCommentsPanel extends CommentsPanel {
         });
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         pane.add(toggleButton);
+        if (Controller.choices.getChoices().size() == 2)
+            toggleButton.setVisible(false);
         createComments();
     }
     @Override
