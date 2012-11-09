@@ -104,7 +104,7 @@ public class Controller {
                   ResultSet r = s.getResultSet();
                   r.first();
                   choiceids = choiceids+r.getString(1)+",";
-                  if (!type.equals("ma") && answers.contains(choices.get(i))) {
+                  if ((!type.equals("ma")) && answers.contains(choices.get(i))) {
                       answerids = answerids+r.getString(1)+",";
                   } else if (type.equals("ma")) { // The case where the question is matching type
                       // Put all of the answers in as choices here.

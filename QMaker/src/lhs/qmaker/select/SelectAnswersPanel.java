@@ -22,6 +22,7 @@ public class SelectAnswersPanel extends AnswersPanel {
     Border defaultBorder = new JButton().getBorder();
     boolean answers[];
     HashMap<JButton,Boolean> mapping = new HashMap<JButton,Boolean>();
+    HashMap<JButton,String> buttonToText = new HashMap<JButton,String>();
     /**
      * Create the panel.
      */
@@ -34,6 +35,7 @@ public class SelectAnswersPanel extends AnswersPanel {
             JButton b = new WrapButton(choices.get(i));
             buttons.add(b);
             mapping.put(b, false);
+            buttonToText.put(b, choices.get(i));
             b.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent arg0) {
@@ -58,9 +60,10 @@ public class SelectAnswersPanel extends AnswersPanel {
 		Set<JButton> keys = mapping.keySet();
 		for (JButton b : keys) {
 			if (mapping.get(b)) {
-				answers.add(b.getText());
+				answers.add(buttonToText.get(b));
 			}
 		}
+                
 		return answers;
 	}
 
