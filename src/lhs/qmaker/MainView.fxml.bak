@@ -18,7 +18,7 @@
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#newMultipleChoice" text="Multiple Choice" />
                     <MenuItem mnemonicParsing="false" onAction="#newMatching" text="Matching" />
-                    <MenuItem mnemonicParsing="false" onAction="#newSelectAll" text="Select All That Apply" />
+                    <MenuItem mnemonicParsing="false" onAction="newSelectAll" text="Select All That Apply" />
                   </items>
                 </Menu>
               </items>
