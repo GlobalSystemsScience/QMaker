@@ -13,6 +13,8 @@ import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import lhs.qmaker.account.SignInPanel;
+
 public class QMaker {
 
     private JFrame frame;
@@ -31,6 +33,7 @@ public class QMaker {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                Controller.setPane(new SignInPanel());
             }
         });
     }
@@ -59,14 +62,14 @@ public class QMaker {
 
         JMenuBar menuBar = new JMenuBar();
         frame.setJMenuBar(menuBar);
-        JMenu mnFile = new JMenu("File");
-        menuBar.add(mnFile);
+        JMenu signIn = new JMenu("Account");
+        menuBar.add(signIn);
         
-        JMenuItem mntmSave = new JMenuItem("Save..");
-        mnFile.add(mntmSave);
+        JMenuItem mntmSave = new JMenuItem("Sign In");
+        signIn.add(mntmSave);
         
-        JMenuItem mntmOpen = new JMenuItem("Open..");
-        mnFile.add(mntmOpen);
+        JMenuItem signUp = new JMenuItem("Sign Up");
+        signIn.add(signUp);
         
         JMenu mnQuestions = new JMenu("Questions");
         menuBar.add(mnQuestions);

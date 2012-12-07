@@ -1,5 +1,6 @@
 package lhs.qmaker;
 
+import com.google.gson.JsonObject;
 import java.awt.Container;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,7 +15,9 @@ import lhs.qmaker.select.SelectQuestionPanel;
 
 
 public class Controller {
-    public static final String QUOTATION_MARK_REPLACE = "%qm%";
+    public static final String QUOTATION_MARK_REPLACE = "%%qm%%";
+    public static final String LESS_THAN_REPLACE = "%%lt%%";
+    public static final String GREATER_THAN_REPLACE = "%%gt%%";
     
     private static final String USERNAME = "qmaker";
     private static final String PASSWORD = "E1nste1n";
@@ -73,23 +76,15 @@ public class Controller {
     }
     public static boolean createQuestion(String question, ArrayList<String> choices, ArrayList<String> answers,
             ArrayList<String> comments, String type) {
-        Connection con = null;
-        String driver = "org.gjt.mm.mysql.Driver";
         try {
-            Class.forName(driver);
-          con = DriverManager.getConnection
-                  ("jdbc:mysql://" +HOSTNAME+"/"+DATABASE+"?user="+USERNAME+"&password="+PASSWORD); 
-          Statement s=con.createStatement();
           if (comments.size() == 2) {
-              
               // Handles putting the comments into the database.
               String commentids = "";
               for (int i = 0; i < comments.size(); i++) {
-                  s.executeUpdate("INSERT INTO comments (comment) VALUES (\""+comments.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE) +"\")");
-                  s.execute("SELECT c.id FROM comments c WHERE c.comment=\""+comments.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\"");
-                  ResultSet r = s.getResultSet();
-                  r.first();
-                  commentids = commentids+r.getString(1)+",";
+                  Queries.sendQuery("INSERT INTO comments (comment) VALUES (\""+format(comments.get(i)) +"\")",false);
+                  JsonObject result = Queries.sendQuery("SELECT c.id FROM comments c WHERE c.comment=\""+format(comments.get(i))+"\"",true);
+                  String r = result.get("id").getAsString();
+                  commentids = commentids+r+",";
               }
               
               /* Handles putting the choices into the database.
@@ -99,59 +94,58 @@ public class Controller {
               String choiceids = "";
               String answerids = "";
               for (int i = 0; i < choices.size(); i++) {
-                  s.executeUpdate("INSERT INTO choices (choice) VALUES (\""+choices.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\")");
-                  s.execute("SELECT ch.id FROM choices ch WHERE ch.choice=\""+choices.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\"");
-                  ResultSet r = s.getResultSet();
-                  r.first();
-                  choiceids = choiceids+r.getString(1)+",";
+                  Queries.sendQuery("INSERT INTO choices (choice) VALUES (\""+format(choices.get(i))+"\")",false);
+                  JsonObject result = Queries.sendQuery("SELECT ch.id FROM choices ch WHERE ch.choice=\""+format(choices.get(i))+"\"",true);
+                  String r = result.get("id").getAsString();
+                  choiceids = choiceids+r+",";
                   if ((!type.equals("ma")) && answers.contains(choices.get(i))) {
-                      answerids = answerids+r.getString(1)+",";
+                      answerids = answerids+r+",";
                   } else if (type.equals("ma")) { // The case where the question is matching type
                       // Put all of the answers in as choices here.
-                      s.executeUpdate("INSERT INTO choices (choice) VALUES (\""+answers.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\")");
-                      s.execute("SELECT ch.id FROM choices ch WHERE ch.choice=\""+answers.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\"");
-                      r = s.getResultSet();
-                      r.first();
-                      answerids = answerids+r.getString(1)+",";
+                      Queries.sendQuery("INSERT INTO choices (choice) VALUES (\""+format(answers.get(i))+"\")",false);
+                      result = Queries.sendQuery("SELECT ch.id FROM choices ch WHERE ch.choice=\""+format(answers.get(i))+"\"",true);
+                      r = result.get("id").getAsString();
+                      answerids = answerids+r+",";
                   }
-                  
               }
               
               /* Put the question tuple into the database that ties the
                * other components together.
                */
-              s.executeUpdate("INSERT INTO questions (question, choice_ids, answer_ids, type, wrong_comment, correct_comment) VALUES (\""+
-                      question.replaceAll("\"", QUOTATION_MARK_REPLACE)+"\", \""+choiceids +"\", \""+answerids+"\", \""+type+"\", \""+comments.get(1).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\", \""+comments.get(0).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\")");
+              Queries.sendQuery("INSERT INTO questions (question, choice_ids, answer_ids, type, wrong_comment, correct_comment) VALUES (\""+
+                      format(question) +"\", \""+choiceids +"\", \""+answerids+"\", \""+type+"\", \""+format(comments.get(1))+"\", \""+format(comments.get(0))+"\")",false);
           } else {
               String commentids[] = new String[comments.size()];
               for (int i = 0; i < comments.size(); i++) {
-                  s.executeUpdate("INSERT INTO comments (comment) VALUES (\""+comments.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\")");
-                  s.execute("SELECT c.id FROM comments c WHERE c.comment=\""+comments.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\"");
-                  ResultSet r = s.getResultSet();
-                  r.first();
-                  commentids[i] = r.getString(1);
+                  Queries.sendQuery("INSERT INTO comments (comment) VALUES (\""+format(comments.get(i))+"\")",false);
+                  JsonObject result = Queries.sendQuery("SELECT c.id FROM comments c WHERE c.comment=\""+format(comments.get(i))+"\"",true);
+                  String r = result.get("id").getAsString();
+                  commentids[i] = r;
               }
               String answerids = new String();
               String choiceids = new String();
               for (int i = 0; i < choices.size(); i++) {
-                  s.executeUpdate("INSERT INTO choices (choice, comment_id) VALUES (\""+choices.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\", "+commentids[i]+")");
-                  s.execute("SELECT ch.id FROM choices ch WHERE ch.choice=\""+choices.get(i).replaceAll("\"", QUOTATION_MARK_REPLACE)+"\" AND ch.comment_id=\""+commentids[i]+"\"");
-                  ResultSet r = s.getResultSet();
-                  r.first();
+                  Queries.sendQuery("INSERT INTO choices (choice, comment_id) VALUES (\""+format(choices.get(i))+"\", "+commentids[i]+")",false);
+                  JsonObject result = Queries.sendQuery("SELECT ch.id FROM choices ch WHERE ch.choice=\""+format(choices.get(i))+"\" AND ch.comment_id=\""+commentids[i]+"\"",true);
+                  String r = result.get("id").getAsString();
                   if (answers.contains(choices.get(i))) {
-                      answerids = answerids+r.getString(1)+",";
+                      answerids = answerids+r+",";
                   }
-                  choiceids = choiceids+r.getString(1)+",";
+                  choiceids = choiceids+r+",";
               }
-              s.executeUpdate("INSERT INTO questions (question, choice_ids, answer_ids, type) VALUES (\""+
-                      question.replaceAll("\"", QUOTATION_MARK_REPLACE)+"\", \""+choiceids +"\", \""+answerids+"\", \""+type+"\")");
+              Queries.sendQuery("INSERT INTO questions (question, choice_ids, answer_ids, type) VALUES (\""+
+                      format(question)+"\", \""+choiceids +"\", \""+answerids+"\", \""+type+"\")",false);
           }
         } catch (Exception ex) {
             ex.printStackTrace();
-            try {con.close();} catch (SQLException e) {e.printStackTrace();}
             return false;
         }
-        try {con.close();} catch (SQLException e) {e.printStackTrace();}
         return true;
+    }
+    public static String format(String toFormat) {
+        String formatted = toFormat.replaceAll("\"", QUOTATION_MARK_REPLACE);
+        formatted = formatted.replaceAll("<", LESS_THAN_REPLACE);
+        formatted = formatted.replaceAll(">", GREATER_THAN_REPLACE);
+        return formatted;
     }
 }
