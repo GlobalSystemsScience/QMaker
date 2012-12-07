@@ -1,11 +1,11 @@
-package lhs.qmaker.MultipleChoice;
+package lhs.qmaker.multiplechoice;
 
 
 import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
 
 import lhs.qmaker.CommentsPanel;
-import lhs.qmaker.MenuController;
+import lhs.qmaker.Controller;
 import lhs.qmaker.QMaker;
 
 import java.awt.event.ActionListener;
@@ -32,7 +32,6 @@ public class MultipleChoiceCommentsPanel extends CommentsPanel {
      */
     public MultipleChoiceCommentsPanel() {
         super();
-        
         toggleButton = new JToggleButton("Comments for Every Choice");
         toggleButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         toggleButton.addActionListener(new ActionListener() {
@@ -48,27 +47,32 @@ public class MultipleChoiceCommentsPanel extends CommentsPanel {
         });
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         pane.add(toggleButton);
+        if (Controller.choices.getChoices().size() == 2)
+            toggleButton.setVisible(false);
         createComments();
     }
     @Override
     public void toAnswers() {
-        MenuController.setPane(MenuController.answers);
+        Controller.setPane(Controller.answers);
     }
     @Override
-    public void completeQuestion() {
-        // TODO Auto-generated method stub
-        
-    }
-    @Override
-    public void getComments() {
-        // TODO Auto-generated method stub
-        
+    public ArrayList<String> getComments() {
+        ArrayList<JTextArea> comments;
+        if (toggleButton.isSelected())
+            comments = perChoice;
+        else
+            comments = correctIncorrect;
+        ArrayList<String> results = new ArrayList<String>();
+        for (int i = 0; i < comments.size(); i++) {
+            results.add(comments.get(i).getText());
+        }
+        return results;
     }
     private void createComments() {
         ArrayList<JTextArea> comments;
         int num = 0;
         if (toggleButton.isSelected()) {
-            num = MenuController.choices.getChoices().size();
+            num = Controller.choices.getChoices().size();
             comments = perChoice;
         } else {
             num = 2;
@@ -83,11 +87,13 @@ public class MultipleChoiceCommentsPanel extends CommentsPanel {
         }
         for(; i < num; i++) {
             JTextArea textArea = new JTextArea();
-            if (num == 2) {
-                textArea.setText("Type comment for correct answer here.");
-            } else {
-                textArea.setText("Type comment for answer, \"" + MenuController.choices.getChoices().get(i) + "\", here.");
-            }
+            if (num == 2)
+            	if (i == 0)
+            		textArea.setText("Type comment for correct answer here.");
+            	else
+            		textArea.setText("Type comment for wrong answer here.");
+            else
+                textArea.setText("Type comment for answer, \"" + Controller.choices.getChoices().get(i) + "\", here.");
             textArea.setWrapStyleWord(true);
             textArea.setLineWrap(true);
             textArea.setBorder(new LineBorder(new Color(0, 0, 0)));

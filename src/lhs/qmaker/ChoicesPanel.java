@@ -62,6 +62,15 @@ public abstract class ChoicesPanel extends JPanel {
         
         JButton btnNewButton_1 = new JButton("Cancel");
         btnNewButton_1.setBounds(160, 14, 130, 23);
+        btnNewButton_1.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		Controller.goToHomeScreen();
+        		Controller.question = null;
+        		Controller.choices = null;
+        		Controller.answers = null;
+        		Controller.comments = null;
+        	}
+        });
         buttonPanel.add(btnNewButton_1);
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(WIDTH, 40));

@@ -47,6 +47,15 @@ public abstract class QuestionPanel extends JPanel {
         panel.add(toChoicesButton);
         
         cancelButton = new JButton("Cancel");
+        cancelButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		Controller.goToHomeScreen();
+        		Controller.question = null;
+        		Controller.choices = null;
+        		Controller.answers = null;
+        		Controller.comments = null;
+        	}
+        });
         cancelButton.setBounds(159, 14, 130, 23);
         cancelButton.setPreferredSize(new Dimension(130, 23));
         panel.add(cancelButton);

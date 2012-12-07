@@ -13,6 +13,8 @@ import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import lhs.qmaker.account.SignInPanel;
+
 public class QMaker {
 
     private JFrame frame;
@@ -31,6 +33,7 @@ public class QMaker {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                Controller.setPane(new SignInPanel());
             }
         });
     }
@@ -52,21 +55,21 @@ public class QMaker {
      * Initialize the contents of the frame.
      */
     private void initialize() {
-        MenuController.setQMaker(this);
+        Controller.setQMaker(this);
         frame = new JFrame();
         frame.setBounds(100, 100, 480, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JMenuBar menuBar = new JMenuBar();
         frame.setJMenuBar(menuBar);
-        JMenu mnFile = new JMenu("File");
-        menuBar.add(mnFile);
+        JMenu signIn = new JMenu("Account");
+        menuBar.add(signIn);
         
-        JMenuItem mntmSave = new JMenuItem("Save..");
-        mnFile.add(mntmSave);
+        JMenuItem mntmSave = new JMenuItem("Sign In");
+        signIn.add(mntmSave);
         
-        JMenuItem mntmOpen = new JMenuItem("Open..");
-        mnFile.add(mntmOpen);
+        JMenuItem signUp = new JMenuItem("Sign Up");
+        signIn.add(signUp);
         
         JMenu mnQuestions = new JMenu("Questions");
         menuBar.add(mnQuestions);
@@ -77,19 +80,30 @@ public class QMaker {
         JMenuItem mntmMultipleChoice = new JMenuItem("Multiple Choice");
         mntmMultipleChoice.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                MenuController.newMultipleChoice();
+                Controller.newMultipleChoice();
             }
         });
         mnNew.add(mntmMultipleChoice);
         
         JMenuItem mntmMatching = new JMenuItem("Matching");
+        mntmMatching.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		Controller.newMatching();
+        	}
+        });
         mnNew.add(mntmMatching);
         
         JMenuItem mntmSelectAllThat = new JMenuItem("Select All That Apply");
+        mntmSelectAllThat.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		Controller.newSelect();
+        	}
+        });
         mnNew.add(mntmSelectAllThat);
         
-        JMenuItem mntmWriteIn = new JMenuItem("Write In");
-        mnNew.add(mntmWriteIn);
+        //This is not needed for interactive questions
+        /*JMenuItem mntmWriteIn = new JMenuItem("Write In");
+        mnNew.add(mntmWriteIn);*/
         
         JMenu mnEdit = new JMenu("Edit");
         mnQuestions.add(mnEdit);

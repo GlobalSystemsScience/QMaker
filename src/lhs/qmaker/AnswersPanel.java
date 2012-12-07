@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Component;
 import java.awt.BorderLayout;
+import java.util.ArrayList;
 
 public abstract class AnswersPanel extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -47,6 +48,15 @@ public abstract class AnswersPanel extends JPanel {
         panel.add(btnToComments);
         
         JButton button_2 = new JButton("Cancel");
+        button_2.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		Controller.goToHomeScreen();
+        		Controller.question = null;
+        		Controller.choices = null;
+        		Controller.answers = null;
+        		Controller.comments = null;
+        	}
+        });
         button_2.setBounds(160, 14, 130, 23);
         panel.add(button_2);
         
@@ -69,7 +79,7 @@ public abstract class AnswersPanel extends JPanel {
 
     }
     
-    public abstract String getAnswer();
+    public abstract ArrayList<String> getAnswers();
     public abstract void toChoices();
     public abstract void toComments();
 }
