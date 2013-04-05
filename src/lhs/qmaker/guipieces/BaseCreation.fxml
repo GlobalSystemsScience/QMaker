@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import lhs.qmaker.guipieces.*?>
+<?import lhs.qmaker.guipieces.Choices?>
+<?scenebuilder-classpath-element ../../../../dist/QMakerFX.jar?>
+
+<fx:root type="javafx.scene.layout.AnchorPane" id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml">
+  <children>
+    <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <tabs>
+        <Tab text="Question">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <TextArea id="question" fx:id="questionArea" prefHeight="364.0" prefWidth="600.0" promptText="Enter the question here." wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab text="Choices">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <ComboBox editable="false" onAction="#numChoiceChange" value="4" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <items>
+                    <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="2" />
+                      <String fx:value="3" />
+                      <String fx:value="4" />
+                      <String fx:value="5" />
+                      <String fx:value="6" />
+                      <String fx:value="7" />
+                      <String fx:value="8" />
+                      <String fx:value="9" />
+                      <String fx:value="10" />
+                    </FXCollections>
+                  </items>
+                </ComboBox>
+                <Choices id="choices" fx:id="choicesPane" prefHeight="364.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0" />
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab fx:id="answerTab" onSelectionChanged="#answerTabSelected" text="Answer">
+          <content>
+            <AnchorPane id="Content" fx:id="answerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+          </content>
+        </Tab>
+        <Tab fx:id="feedbackTab" onSelectionChanged="#feedbackTabSelected" text="Feed Back">
+          <content>
+            <AnchorPane id="Content" fx:id="feedbackPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+          </content>
+        </Tab>
+        <Tab fx:id="submitPanel" onSelectionChanged="#submitChange" text="Submit Question">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <TextField fx:id="tag1Field" layoutX="14.0" layoutY="52.0" prefWidth="200.0" promptText="Enter Tag 1 here." />
+                <Label layoutX="14.0" layoutY="14.0" text="Enter Up to Three Tags Below" />
+                <TextField fx:id="tag2Field" layoutX="14.0" layoutY="84.0" prefWidth="200.0" promptText="Enter Tag 2 here." />
+                <TextField fx:id="tag3Field" layoutX="14.0" layoutY="116.0" prefWidth="200.0" promptText="Enter Tag 3 here." />
+                <Label layoutX="300.0" layoutY="10.0" text="Submit Question" />
+                <Button fx:id="submitButton" cancelButton="false" defaultButton="true" disable="false" layoutX="300.0" layoutY="52.0" mnemonicParsing="false" onAction="#submitQuestion" prefWidth="109.0" text="Submit" underline="false" />
+                <Label fx:id="messageLabel" layoutX="300.0" layoutY="87.0" prefWidth="286.0" text="" textFill="RED" />
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+      </tabs>
+    </TabPane>
+  </children>
+</fx:root>

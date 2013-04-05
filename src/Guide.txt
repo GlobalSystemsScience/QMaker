@@ -1,0 +1,12 @@
+       QMaker is a tool for creating interactive web questions that give students feedback in real time. Once a question is created, it is stored in our database and can be embedded easily into any webpage. There are three types of questions that can be created: Multiple Choice, Matching, and Select All That Apply. Questions are created by selecting Question in the menu bar and then either New Question or Clone and Edit Existing Question from the drop down menu. New Question presents a submenu with option to select one of the three question types and then displays the question creation interface in the main view with all fields left blank. Clone and Edit Existing Question allows you to search for existing questions in the database by any of the tags that were associated with the question when it was created. When the question is selected, the question creation interface is displayed in the main view with all fields pre-filled with the appropriate text from the former question. Note that this does not replace existing questions, but rather adds a modified copy to the database with a new URL for displaying the modified question.
+       
+-Multiple Choice
+	Multiple Choice questions display the question along with a button for each of the possible choices. The order of the choices is randomly decided with each page request. When a student selects a choice, a popup dialog displays the teacher defined feedback to the student. For multiple choice questions, the teacher can choose to provide one feedback display for all incorrect answers or give a unique feedback comment for each individual choice presented to the student.
+
+-Matching
+	Matching questions display the question, a column of items in their original order, and a column of items, in random order, to match to the items in the first column. The student matches all of the items in the right column to those on the left and then submits his answers by click of a button at the bottom of the question. The student is then given teacher defined feedback letting him know if he was correct or incorrect.
+
+-Select All That Apply
+	Select All That Apply questions display the question and a randomly ordered column of possible choices, each with a selectable checkbox. The student checks as many or as few of the choices as possible and then submits his selections by click of a button at the bottom of the question. The student is then given teacher defined feedback letting him know if he was correct or incorrect.
+
+

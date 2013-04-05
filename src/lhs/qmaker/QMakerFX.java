@@ -4,11 +4,13 @@
  */
 package lhs.qmaker;
 
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import lhs.qmaker.database.Database;
 
 /**
  *
@@ -18,6 +20,7 @@ public class QMakerFX extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+        //int i = StoreQuestion.storeMultiChoice("q", new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>());
         Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
         
         Scene scene = new Scene(root);
@@ -35,6 +38,8 @@ public class QMakerFX extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
         launch(args);
+        
     }
 }

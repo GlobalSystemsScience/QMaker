@@ -1,0 +1,10 @@
+About The Software
+
+QMaker is a free tool to aid educators in developing interactive web questions that can be easily embedded into any webpage.
+
+QMaker was created by the staff at Lawrence Hall of Science:
+Jordan Bull (Software Engineer)
+Alan Gould
+
+© 2013 by the Regents of the University of California
+Permission granted for non-profit educational use.

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root type="javafx.scene.layout.AnchorPane" id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml">
+  <children>
+    <RadioButton fx:id="distinct" mnemonicParsing="false" text="Distinct Feedback Per Choice" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="15.0">
+      <toggleGroup>
+        <ToggleGroup fx:id="type" />
+      </toggleGroup>
+    </RadioButton>
+    <RadioButton fx:id="correctIncorrect" mnemonicParsing="false" selected="true" text="Correct and Incorrect Feedback" toggleGroup="$type" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+    <AnchorPane fx:id="inner" prefHeight="362.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0" />
+  </children>
+</fx:root>
