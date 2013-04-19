@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<fx:root type="javafx.scene.layout.AnchorPane" id="AnchorPane" prefHeight="263.0000999999975" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml">
+  <children>
+    <Label alignment="CENTER" contentDisplay="CENTER" layoutY="14.0" prefWidth="579.0" text="Question Saved to Database!" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="7.0">
+      <font>
+        <Font size="18.0" />
+      </font>
+    </Label>
+    <TextArea fx:id="htmlBox" editable="false" prefWidth="551.0" text="" wrapText="true" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="71.0" />
+    <Label prefWidth="551.0" text="Below is the html code to embed your question in your webpage." AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="55.0" />
+  </children>
+</fx:root>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="94.513671875" prefWidth="593.853515625" xmlns:fx="http://javafx.com/fxml">
+  <children>
+    <Text layoutX="176.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cannot connect to server.">
+      <font>
+        <Font name="System Bold" size="20.0" />
+      </font>
+    </Text>
+    <Text layoutX="22.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This may be a result of a bad network connection or the server may be down temporarily.">
+      <font>
+        <Font size="14.0" />
+      </font>
+    </Text>
+  </children>
+</AnchorPane>

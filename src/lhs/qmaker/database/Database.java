@@ -5,9 +5,16 @@
 package lhs.qmaker.database;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -20,7 +27,7 @@ import org.json.JSONArray;
  */
 public class Database {
     
-    public static final String QMAKER_URL = "http://qmaker.zxq.net/";
+    public static final String QMAKER_URL = "http://qmaker.zxq.net/qmakerfx/";
     private static final String STORE_QUESTION_URL = "http://qmaker.zxq.net/storeQuestion.php";
     private static final String GET_QUESTIONS_BY_TAG_URL = "http://qmaker.zxq.net/getquestionsbytag.php";
     public static final String MULTICHOICE = "mc";
@@ -51,6 +58,7 @@ public class Database {
             return Integer.parseInt(s);
         } catch (Exception e) {
             e.printStackTrace();
+            warnUserNoNetwork();
         }
         return -1;
     }
@@ -83,7 +91,21 @@ public class Database {
             return json;
         } catch (Exception e) {
             e.printStackTrace();
+            warnUserNoNetwork();
         }
         return null;
+    }
+    public static void warnUserNoNetwork() {
+        try {
+            Parent root = FXMLLoader.load(Database.class.getResource("NoNetwork.fxml"));
+        
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

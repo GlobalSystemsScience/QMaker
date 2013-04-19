@@ -129,7 +129,8 @@ public abstract class BaseCreation extends AnchorPane {
         //TODO adjust height and width
         String code = "<iframe name=\"QMakerQuestion"+questionID+"\" src=\""
                 +Database.QMAKER_URL+"?qid="+questionID
-                +"\" width=200 height=200 marginwidth=0 marginheight=0 hspace=0 vspace=0 frameborder=0 scrolling=auto></iframe>";
+                +"\" width=400 height=400 marginwidth=0 marginheight=0 hspace=0 vspace=0 frameborder=0 scrolling=auto></iframe>";
+        System.out.println(code);
         return code;
     }
     @FXML
