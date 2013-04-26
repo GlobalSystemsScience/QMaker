@@ -28,8 +28,8 @@ import org.json.JSONArray;
 public class Database {
     
     public static final String QMAKER_URL = "http://qmaker.zxq.net/qmakerfx/";
-    private static final String STORE_QUESTION_URL = "http://qmaker.zxq.net/storeQuestion.php";
-    private static final String GET_QUESTIONS_BY_TAG_URL = "http://qmaker.zxq.net/getquestionsbytag.php";
+    private static final String STORE_QUESTION_URL = "http://qmaker.zxq.net/qmakerfx/storeQuestion.php";
+    private static final String GET_QUESTIONS_BY_TAG_URL = "http://qmaker.zxq.net/qmakerfx/getquestionsbytag.php";
     public static final String MULTICHOICE = "mc";
     public static final String MATCHING = "ma";
     public static final String SELECT = "se";
